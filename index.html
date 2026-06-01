@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Supplementary project page for ReAlign semantic-physical text-to-motion generation.">
+  <meta property="og:title" content="ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment"/>
+  <meta property="og:description" content="Offline visualization page for the updated ReAlign semantic-physical draft."/>
+  <meta property="og:image" content="static/images/intro.jpg" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta name="twitter:title" content="ReAlign">
+  <meta name="twitter:description" content="Step-aware semantic reward guidance with physical proxy repair.">
+  <meta name="twitter:image" content="static/images/intro.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="text-to-motion generation, reward guidance, physical proxy, motion diffusion">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment</title>
+  <link rel="icon" type="image/x-icon" href="">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+
+  <style>
+    .tldr {
+      font-size: 0.9em;
+      font-weight: bold;
+      color: #33333389;
+      font-style: italic;
+    }
+    .has-text-justified {
+      text-align: justify;
+    }
+    .image-row {
+      width: 90%;
+      margin: 0 auto 20px auto;
+      text-align: center;
+    }
+    .item {
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      padding: 20px;
+      margin-bottom: 50px;
+      background-color: #fff;
+    }
+    .caption {
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 1.1em;
+      color: #555;
+    }
+    .top-caption h2 {
+      font-size: 1.3em !important;
+      font-weight: bold !important;
+      font-style: italic !important;
+    }
+    .table-image img {
+      width: 100%;
+      height: auto;
+      border: 1px solid #eee;
+      background: #fff;
+    }
+    .video-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .video-list .item {
+      width: calc(50% - 10px);
+      box-sizing: border-box;
+    }
+    .placeholder-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin: 8px 0 12px;
+    }
+    .placeholder-controls button {
+      border: 1px solid #ccc;
+      background: #f7f7f7;
+      border-radius: 4px;
+      padding: 3px 9px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .placeholder-controls button.active {
+      background: #363636;
+      border-color: #363636;
+      color: #fff;
+    }
+    .placeholder-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .placeholder-grid.layout-1 {
+      grid-template-columns: 1fr;
+    }
+    .placeholder-grid.layout-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .placeholder-grid.layout-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .placeholder-grid.layout-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .video-placeholder {
+      min-height: 165px;
+      border: 1px dashed #b5b5b5;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #777;
+      font-size: 0.95rem;
+      padding: 12px;
+    }
+    .placeholder-caption {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 10px;
+      text-align: center;
+    }
+    @media screen and (max-width: 768px) {
+      .video-list .item {
+        width: 100%;
+      }
+      .placeholder-grid.layout-2,
+      .placeholder-grid.layout-3,
+      .placeholder-grid.layout-4 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">ReAlign: Text-to-Motion Generation via Step-Aware Reward-Guided Alignment</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Semantic-Physical Extension</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="static/pdfs/ReAlign-Phy.pdf" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#visualizations"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-film"></i>
+                  </span>
+                  <span>Videos</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="box has-background-white-ter mb-5 p-5">
+          <p class="has-text-justified">
+            <strong>TL;DR:</strong> We update ReAlign with a semantic-physical inference-time alignment framework. The step-aware semantic reward model improves text-motion alignment, while the Step-aware Physical Proxy Model selectively repairs physically fragile motion components during late denoising.
+          </p>
+        </div>
+
+        <div class="box has-background-white-ter p-5">
+          <p class="has-text-justified">
+            Text-to-motion generation synthesizes 3D human motions from natural language descriptions. Diffusion-based models can produce diverse motions, but they may still suffer from semantic mismatch and physically fragile behaviors such as unstable contacts, foot skating, or poor replayability in downstream simulation. We retain the original ReAlign reward-guided sampling strategy for semantic alignment and further introduce a Step-aware Physical Proxy Model (SPPM), which distills offline simulator rollouts into a bounded residual repair policy. The two branches are complementary: SPM guides the denoising trajectory toward text-motion consistency, and SPPM performs semantic-preserved physical repair in a constrained subspace without retraining the diffusion backbone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-container">
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Overall Framework
+            </h2>
+          </div>
+          <div class="image-row">
+            <img src="static/images/sampling.png" alt="Overall reward-guided sampling framework"/>
+          </div>
+          <h2 class="subtitle has-text-centered" style="text-align: justify;">
+            The updated framework uses two inference-time alignment branches. SPM estimates a step-aware semantic reward distribution and guides the reverse diffusion trajectory, while SPPM performs late-stage simulator-distilled repair in physically sensitive motion channels. This design improves semantic consistency and physical executability while preserving the generated motion intent.
+          </h2>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Step-Aware Semantic Reward Model
+            </h2>
+          </div>
+          <div class="image-row">
+            <img src="static/images/step_aware.png" alt="Step-aware reward model"/>
+          </div>
+          <h2 class="subtitle has-text-centered">
+            The step-aware reward model aligns timestep-aware motion tokens with text embeddings in a shared latent space, making reward estimation robust to noisy denoising states.
+          </h2>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Visual comparison of text-to-motion generation results.
+            </h2>
+          </div>
+          <div class="image-row">
+            <img src="static/images/intro.jpg" alt="Visual comparison"/>
+          </div>
+          <h2 class="subtitle has-text-centered">
+            Visual comparison of text-to-motion generation. ReAlign improves text-motion alignment by guiding samples toward reward-preferred regions during denoising.
+          </h2>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title has-text-centered justify-top" style="font-size:2em; font-weight:bold; font-style:italic;">
+        Main Results
+      </h1>
+
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Text-to-motion generation performance on HumanML3D
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/sota_h3d.png" alt="HumanML3D text-to-motion generation table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Unified semantic and post-simulation analysis
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/semantic_physical_h3d.png" alt="Unified semantic and physical analysis table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Comparison with physics-related generation methods
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/published_physics_context.png" alt="Physics-related generation methods table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Supplementary physical diagnostics
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/physics_diagnostics_h3d.png" alt="Physical diagnostics table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Motion-text retrieval
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/retrieval.png" alt="Motion-text retrieval table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Plug-and-play functionality
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/plug_and_play_h3d.png" alt="Plug-and-play HumanML3D table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Ablation of reward design
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/ablation_reward.png" alt="Reward ablation table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Ablation of SPM and SPPM
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/ablation_sppm.png" alt="SPM and SPPM ablation table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Discussion on ReAlign and CFG
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/cmp_cfg.png" alt="Classifier-free guidance comparison table"/>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="caption top-caption">
+            <h2 class="subtitle has-text-centered">
+              Text-to-motion generation performance on KIT-ML
+            </h2>
+          </div>
+          <div class="image-row table-image">
+            <img src="static/images/tables/sota_kit.png" alt="KIT-ML text-to-motion generation table"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="visualizations" class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Video Visualizations</h2>
+      <p class="subtitle" style="font-size:1.05em; margin-bottom:20px;">
+        Four slots are reserved for final qualitative videos. Each slot supports single, two-way, three-way, and four-way comparison layouts.
+      </p>
+      <div class="video-list" id="video-placeholders"></div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3">Paper</h2>
+      <p>
+        The updated paper draft is included locally as
+        <a href="static/pdfs/ReAlign-Phy.pdf" target="_blank">static/pdfs/ReAlign-Phy.pdf</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Offline supplementary project page for the updated ReAlign semantic-physical draft.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener("load", function () {
+    if (window.bulmaCarousel) {
+      bulmaCarousel.attach(".carousel", {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000
+      });
+    }
+    if (window.bulmaSlider) {
+      bulmaSlider.attach();
+    }
+  });
+
+  const videoSlots = [
+    ["Sample 1", ["Baseline", "ReAlign-Phy", "ReAlign", "SPPM"]],
+    ["Sample 2", ["MLD", "ReAlign", "SPPM", "ReAlign-Phy"]],
+    ["Sample 3", ["Generated", "Sim Replay", "Repaired", "Reference"]],
+    ["Sample 4", ["Before Repair", "After Repair", "Contact", "Tracking"]]
+  ];
+
+  function setLayout(card, count) {
+    const grid = card.querySelector(".placeholder-grid");
+    grid.className = "placeholder-grid layout-" + count;
+    grid.querySelectorAll(".video-placeholder").forEach((slot, index) => {
+      slot.style.display = index < count ? "flex" : "none";
+    });
+    card.querySelectorAll("button").forEach((button) => {
+      button.classList.toggle("active", button.dataset.count === String(count));
+    });
+  }
+
+  const holder = document.getElementById("video-placeholders");
+  videoSlots.forEach(([title, labels], index) => {
+    const item = document.createElement("div");
+    item.className = "item";
+    item.innerHTML = `
+      <div class="caption top-caption">
+        <h2 class="subtitle has-text-centered">${title}</h2>
+      </div>
+      <div class="placeholder-controls">
+        <button type="button" data-count="1">1</button>
+        <button type="button" data-count="2">2-way</button>
+        <button type="button" data-count="3">3-way</button>
+        <button type="button" data-count="4">4-way</button>
+      </div>
+      <div class="placeholder-grid layout-2">
+        ${labels.map((label) => `<div class="video-placeholder">${label}<br>video placeholder</div>`).join("")}
+      </div>
+      <div class="placeholder-caption">Reserved visualization slot ${index + 1}. Replace placeholders with local MP4 clips when ready.</div>
+    `;
+    holder.appendChild(item);
+    item.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => setLayout(item, Number(button.dataset.count)));
+    });
+    setLayout(item, 2);
+  });
+</script>
+
+</body>
+</html>

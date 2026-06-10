@@ -1,9 +1,7 @@
-# ReAlign-Phy Project Page Minimal
+# ReAlign-Phy Project Page
 
-This page keeps the original ReAlign project-page style and replaces only the content needed for the updated semantic-physical draft.
+The page presents the framework and two overview visualizations, followed by
+seven qualitative examples. Each example compares MDM, DIP, MLD, and
+MLD+ReAlign-Phy using both skinning videos and physics simulation rollouts.
 
 Open `index.html` directly in a browser.
-
-Source paper directory:
-
-`/data/gui/69eb0a1fc35ac1f45be3dcc0`

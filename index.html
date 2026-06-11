@@ -317,7 +317,7 @@
       const isSkinning = type === "skinning";
       video.autoplay = true;
       video.controls = true;
-      video.loop = true;
+      video.loop = false;
       video.muted = true;
       video.defaultMuted = true;
       video.playsInline = true;
@@ -454,6 +454,11 @@
 
       let syncing = false;
       let suppressEventsUntil = 0;
+      let groupDuration = 0;
+      let groupStartStamp = 0;
+      let groupStartTime = 0;
+      let groupPlaying = false;
+      let monitorHandle = null;
 
       function suppressEvents() {
         suppressEventsUntil = Date.now() + 300;
@@ -468,6 +473,63 @@
           return Math.max(time, 0);
         }
         return Math.min(Math.max(time, 0), Math.max(video.duration - 0.05, 0));
+      }
+
+      function stopMonitor() {
+        groupPlaying = false;
+        if (monitorHandle) {
+          cancelAnimationFrame(monitorHandle);
+          monitorHandle = null;
+        }
+      }
+
+      function groupElapsed() {
+        if (!groupPlaying) {
+          return groupStartTime;
+        }
+        return groupStartTime + ((performance.now() - groupStartStamp) / 1000);
+      }
+
+      function holdShortVideos(time) {
+        videos.forEach((video) => {
+          if (!Number.isFinite(video.duration) || video.duration <= 0) {
+            return;
+          }
+          if (video.duration < groupDuration - 0.05 && time >= video.duration - 0.05) {
+            if (!video.paused) {
+              suppressEvents();
+              video.pause();
+            }
+            const endTime = Math.max(video.duration - 0.05, 0);
+            if (Math.abs(video.currentTime - endTime) > 0.2) {
+              video.currentTime = endTime;
+            }
+          }
+        });
+      }
+
+      function monitorGroup() {
+        if (!groupPlaying) {
+          monitorHandle = null;
+          return;
+        }
+        const elapsed = groupElapsed();
+        holdShortVideos(elapsed);
+        if (groupDuration > 0 && elapsed >= groupDuration - 0.05) {
+          replayAll();
+          return;
+        }
+        monitorHandle = requestAnimationFrame(monitorGroup);
+      }
+
+      function startMonitor(time) {
+        groupStartTime = Math.max(time || 0, 0);
+        groupStartStamp = performance.now();
+        groupPlaying = true;
+        if (monitorHandle) {
+          cancelAnimationFrame(monitorHandle);
+        }
+        monitorHandle = requestAnimationFrame(monitorGroup);
       }
 
       function setTimes(time, exceptVideo) {
@@ -486,16 +548,21 @@
         if (syncing) return;
         syncing = true;
         suppressEvents();
-        if (typeof time === "number") {
-          setTimes(time);
-        }
+        const startTime = typeof time === "number" ? Math.min(time, Math.max(groupDuration - 0.05, 0)) : 0;
+        setTimes(startTime);
         videos.forEach((video) => {
           video.muted = true;
-          const promise = video.play();
-          if (promise && promise.catch) {
-            promise.catch(() => {});
+          if (Number.isFinite(video.duration) && video.duration > 0 && startTime >= video.duration - 0.05) {
+            video.currentTime = Math.max(video.duration - 0.05, 0);
+            video.pause();
+          } else {
+            const promise = video.play();
+            if (promise && promise.catch) {
+              promise.catch(() => {});
+            }
           }
         });
+        startMonitor(startTime);
         syncing = false;
       }
 
@@ -503,6 +570,7 @@
         if (syncing) return;
         syncing = true;
         suppressEvents();
+        stopMonitor();
         videos.forEach((video) => video.pause());
         syncing = false;
       }
@@ -510,6 +578,7 @@
       function replayAll() {
         syncing = true;
         suppressEvents();
+        stopMonitor();
         videos.forEach((video) => {
           video.currentTime = 0;
           video.muted = true;
@@ -518,6 +587,7 @@
             promise.catch(() => {});
           }
         });
+        startMonitor(0);
         syncing = false;
       }
 
@@ -529,7 +599,13 @@
           if (!video.ended && !isSuppressed()) pauseAll();
         });
         video.addEventListener("seeked", () => {
-          if (!isSuppressed()) setTimes(video.currentTime, video);
+          if (!isSuppressed()) {
+            const time = video.currentTime || 0;
+            setTimes(time, video);
+            if (groupPlaying) {
+              startMonitor(time);
+            }
+          }
         });
       });
 
@@ -547,6 +623,9 @@
       }));
 
       Promise.all(ready).then(() => {
+        groupDuration = Math.max(...videos.map((video) => (
+          Number.isFinite(video.duration) ? video.duration : 0
+        )));
         replayAll();
       });
     }

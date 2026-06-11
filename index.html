@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="static/css/index.css">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
@@ -160,14 +161,115 @@
     </div>
   </section>
 
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title has-text-centered justify-top">Main Results</h1>
+
+        <div id="results-carousel" class="carousel results-carousel">
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Text-to-motion generation performance on HumanML3D</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/sota_h3d.png" alt="HumanML3D text-to-motion generation table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Unified semantic and post-simulation analysis</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/semantic_physical_h3d.png" alt="Unified semantic and physical analysis table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Comparison with physics-related generation methods</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/published_physics_context.png" alt="Physics-related generation methods table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Supplementary physical diagnostics</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/physics_diagnostics_h3d.png" alt="Physical diagnostics table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Motion-text retrieval</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/retrieval.png" alt="Motion-text retrieval table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Plug-and-play functionality</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/plug_and_play_h3d.png" alt="Plug-and-play HumanML3D table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Ablation of reward design</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/ablation_reward.png" alt="Reward ablation table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Ablation of SPM and SPPM</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/ablation_sppm.png" alt="SPM and SPPM ablation table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Discussion on ReAlign and CFG</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/cmp_cfg.png" alt="Classifier-free guidance comparison table">
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Text-to-motion generation performance on KIT-ML</h2>
+            </div>
+            <div class="image-row table-image">
+              <img src="static/images/tables/sota_kit.png" alt="KIT-ML text-to-motion generation table">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="visualizations" class="hero is-small">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title has-text-centered justify-top">Synchronized Qualitative Results</h1>
+        <h1 class="title has-text-centered justify-top">Qualitative Visualizations</h1>
         <p class="has-text-centered video-note">
-          Videos are muted, preloaded, autoplayed, and looped. Within each row, the four methods are
-          synchronized: play, pause, seek, and replay actions are propagated to the whole comparison group.
+          Select one prompt and one comparison type at a time. Only the active four videos are loaded and
+          played, which avoids decoding dozens of MP4 streams at once.
         </p>
+        <div id="sample-tabs" class="sample-tabs"></div>
         <div id="sample-list"></div>
       </div>
     </div>
@@ -197,14 +299,17 @@
     ];
 
     const samples = [
-      { id: "000021", prompt: "person is walking normally in a circle" },
-      { id: "002122", prompt: "a person raises both arms up to a 90 degree angle and twists at the waist" },
-      { id: "003653", prompt: "a person lowers and sits cross legged and then stands back up" },
-      { id: "007659", prompt: "jumping forward quickly then stopping." },
-      { id: "008696", prompt: "a person stands on one leg in yoga pose." },
-      { id: "009977", prompt: "person swings right arm as if pitching a ball to the left." },
-      { id: "M006241", prompt: "a person dances around in a little jig" }
+      { id: "000021", label: "Walking circle", prompt: "person is walking normally in a circle" },
+      { id: "002122", label: "Arm twist", prompt: "a person raises both arms up to a 90 degree angle and twists at the waist" },
+      { id: "003653", label: "Cross-legged sit", prompt: "a person lowers and sits cross legged and then stands back up" },
+      { id: "007659", label: "Jump stop", prompt: "jumping forward quickly then stopping." },
+      { id: "008696", label: "Yoga pose", prompt: "a person stands on one leg in yoga pose." },
+      { id: "009977", label: "Pitching motion", prompt: "person swings right arm as if pitching a ball to the left." },
+      { id: "M006241", label: "Little jig", prompt: "a person dances around in a little jig" }
     ];
+
+    let activeSampleIndex = 0;
+    let activeMode = "skinning";
 
     function createVideo(sampleId, method, type, groupId) {
       const video = document.createElement("video");
@@ -245,8 +350,9 @@
       const controls = document.createElement("div");
       controls.className = "comparison-controls";
       controls.innerHTML = `
-        <button class="button is-small is-dark sync-play" type="button">Play group</button>
-        <button class="button is-small sync-replay" type="button">Replay group</button>
+        <button class="button is-small is-dark sync-play" type="button">Play</button>
+        <button class="button is-small sync-pause" type="button">Pause</button>
+        <button class="button is-small sync-replay" type="button">Replay</button>
       `;
 
       header.appendChild(heading);
@@ -271,24 +377,73 @@
       return section;
     }
 
-    function buildSamples() {
-      const sampleList = document.getElementById("sample-list");
-      samples.forEach((sample, index) => {
-        const article = document.createElement("article");
-        article.className = "item sample-item";
-
-        const header = document.createElement("div");
-        header.className = "caption top-caption sample-caption";
-        header.innerHTML = `
-          <h2 class="subtitle has-text-centered">Sample ${String(index + 1).padStart(2, "0")} (${sample.id})</h2>
-          <p class="sample-prompt">"${sample.prompt}"</p>
-        `;
-
-        article.appendChild(header);
-        article.appendChild(createComparisonRow(sample, "skinning", "Skinning"));
-        article.appendChild(createComparisonRow(sample, "physics", "Physics Simulation"));
-        sampleList.appendChild(article);
+    function unloadActiveVideos() {
+      document.querySelectorAll("#sample-list video").forEach((video) => {
+        video.pause();
+        video.removeAttribute("src");
+        video.querySelectorAll("source").forEach((source) => source.removeAttribute("src"));
+        video.load();
       });
+    }
+
+    function buildSampleTabs() {
+      const tabs = document.getElementById("sample-tabs");
+      samples.forEach((sample, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "button is-small sample-tab";
+        button.textContent = sample.label;
+        button.addEventListener("click", () => renderSample(index));
+        tabs.appendChild(button);
+      });
+    }
+
+    function createModeTabs() {
+      const modes = [
+        { key: "skinning", label: "Skinning" },
+        { key: "physics", label: "Physics Simulation" }
+      ];
+      const holder = document.createElement("div");
+      holder.className = "mode-tabs";
+      modes.forEach((mode) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `button is-small mode-tab ${activeMode === mode.key ? "is-dark" : ""}`;
+        button.textContent = mode.label;
+        button.addEventListener("click", () => renderSample(activeSampleIndex, mode.key));
+        holder.appendChild(button);
+      });
+      return holder;
+    }
+
+    function renderSample(index, mode = activeMode) {
+      activeSampleIndex = index;
+      activeMode = mode;
+      unloadActiveVideos();
+      const sampleList = document.getElementById("sample-list");
+      sampleList.innerHTML = "";
+      document.querySelectorAll(".sample-tab").forEach((button, buttonIndex) => {
+        button.classList.toggle("is-dark", buttonIndex === index);
+      });
+
+      const sample = samples[index];
+      const article = document.createElement("article");
+      article.className = "item sample-item";
+
+      const header = document.createElement("div");
+      header.className = "caption top-caption sample-caption";
+      header.innerHTML = `<h2 class="subtitle has-text-centered sample-prompt">"${sample.prompt}"</h2>`;
+
+      article.appendChild(header);
+      article.appendChild(createModeTabs());
+      article.appendChild(createComparisonRow(
+        sample,
+        activeMode,
+        activeMode === "skinning" ? "Skinning" : "Physics Simulation"
+      ));
+      sampleList.appendChild(article);
+
+      syncGroup(`${sample.id}-${activeMode}`);
     }
 
     function syncGroup(groupId) {
@@ -298,23 +453,42 @@
       }
 
       let syncing = false;
-      const tolerance = 0.12;
+      let suppressEventsUntil = 0;
 
-      function setTimes(time) {
+      function suppressEvents() {
+        suppressEventsUntil = Date.now() + 300;
+      }
+
+      function isSuppressed() {
+        return syncing || Date.now() < suppressEventsUntil;
+      }
+
+      function safeTime(video, time) {
+        if (!Number.isFinite(video.duration) || video.duration <= 0) {
+          return Math.max(time, 0);
+        }
+        return Math.min(Math.max(time, 0), Math.max(video.duration - 0.05, 0));
+      }
+
+      function setTimes(time, exceptVideo) {
         videos.forEach((video) => {
-          if (Number.isFinite(video.duration) && video.duration > 0) {
-            const target = Math.min(time, Math.max(video.duration - 0.05, 0));
-            if (Math.abs(video.currentTime - target) > tolerance) {
-              video.currentTime = target;
-            }
+          if (video === exceptVideo) {
+            return;
+          }
+          const target = safeTime(video, time);
+          if (Math.abs(video.currentTime - target) > 0.15) {
+            video.currentTime = target;
           }
         });
       }
 
-      function playAll(master) {
+      function playAll(time) {
         if (syncing) return;
         syncing = true;
-        setTimes(master.currentTime || 0);
+        suppressEvents();
+        if (typeof time === "number") {
+          setTimes(time);
+        }
         videos.forEach((video) => {
           video.muted = true;
           const promise = video.play();
@@ -328,12 +502,14 @@
       function pauseAll() {
         if (syncing) return;
         syncing = true;
+        suppressEvents();
         videos.forEach((video) => video.pause());
         syncing = false;
       }
 
       function replayAll() {
         syncing = true;
+        suppressEvents();
         videos.forEach((video) => {
           video.currentTime = 0;
           video.muted = true;
@@ -346,27 +522,20 @@
       }
 
       videos.forEach((video) => {
-        video.addEventListener("play", () => playAll(video));
+        video.addEventListener("play", () => {
+          if (!isSuppressed()) playAll(video.currentTime || 0);
+        });
         video.addEventListener("pause", () => {
-          if (!video.ended) pauseAll();
+          if (!video.ended && !isSuppressed()) pauseAll();
         });
-        video.addEventListener("seeking", () => {
-          if (!syncing) setTimes(video.currentTime);
+        video.addEventListener("seeked", () => {
+          if (!isSuppressed()) setTimes(video.currentTime, video);
         });
-        video.addEventListener("timeupdate", () => {
-          if (syncing || video.paused) return;
-          videos.forEach((peer) => {
-            if (peer === video || peer.paused) return;
-            if (Math.abs(peer.currentTime - video.currentTime) > 0.35) {
-              peer.currentTime = Math.min(video.currentTime, Math.max(peer.duration - 0.05, 0));
-            }
-          });
-        });
-        video.addEventListener("ended", replayAll);
       });
 
       const row = document.querySelector(`.comparison-row[data-sync-group="${groupId}"]`);
-      row.querySelector(".sync-play").addEventListener("click", () => playAll(videos[0]));
+      row.querySelector(".sync-play").addEventListener("click", () => playAll(videos[0].currentTime || 0));
+      row.querySelector(".sync-pause").addEventListener("click", pauseAll);
       row.querySelector(".sync-replay").addEventListener("click", replayAll);
 
       const ready = videos.map((video) => new Promise((resolve) => {
@@ -383,25 +552,8 @@
     }
 
     window.addEventListener("load", () => {
-      buildSamples();
-      samples.forEach((sample) => {
-        syncGroup(`${sample.id}-skinning`);
-        syncGroup(`${sample.id}-physics`);
-      });
-
-      if (window.bulmaCarousel) {
-        bulmaCarousel.attach(".carousel", {
-          slidesToScroll: 1,
-          slidesToShow: 1,
-          loop: true,
-          infinite: true,
-          autoplay: true,
-          autoplaySpeed: 5000
-        });
-      }
-      if (window.bulmaSlider) {
-        bulmaSlider.attach();
-      }
+      buildSampleTabs();
+      renderSample(activeSampleIndex);
     });
   </script>
 </body>

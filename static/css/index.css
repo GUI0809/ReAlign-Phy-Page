@@ -101,6 +101,13 @@ body {
   width: 96%;
 }
 
+.table-image img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #eee;
+  background: #fff;
+}
+
 .results-carousel {
   overflow: hidden;
 }
@@ -127,6 +134,27 @@ body {
   font-size: 1.05rem;
 }
 
+.sample-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 28px auto;
+  max-width: 1100px;
+}
+
+.sample-tab {
+  white-space: normal;
+}
+
+.mode-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: -8px auto 24px auto;
+}
+
 .sample-item {
   padding: 22px;
 }
@@ -137,11 +165,12 @@ body {
 }
 
 .sample-prompt {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto 10px auto;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-style: italic;
+  line-height: 1.35;
 }
 
 .comparison-row {
@@ -181,13 +210,13 @@ body {
 }
 
 .video-list .item {
-  width: calc(25% - 8px);
+  width: calc(50% - 5px);
   box-sizing: border-box;
   margin-bottom: 0;
 }
 
 .video-card {
-  padding: 10px;
+  padding: 12px;
 }
 
 .video-method-label {
@@ -226,7 +255,7 @@ body {
 
 @media screen and (max-width: 1100px) {
   .video-list .item {
-    width: calc(50% - 5px);
+    width: 100%;
   }
 }
 

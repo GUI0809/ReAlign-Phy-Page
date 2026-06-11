@@ -1,26 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
   <meta charset="utf-8">
-  <meta name="description" content="ReAlign-Phy qualitative results with skinning and physics simulation comparisons.">
+  <meta name="description" content="Supplementary project page for ReAlign-Phy semantic and physical text-to-motion alignment.">
   <meta property="og:title" content="ReAlign-Phy: Semantic and Physical Alignment for Text-to-Motion Generation">
-  <meta property="og:description" content="Project page with framework, qualitative visualizations, skinning results, and physics simulations.">
+  <meta property="og:description" content="Framework, qualitative figures, skinning videos, and synchronized physics simulations.">
   <meta property="og:image" content="static/images/figures/framework.png">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
   <meta name="twitter:title" content="ReAlign-Phy">
-  <meta name="twitter:description" content="Semantic and physical alignment for text-to-motion generation.">
+  <meta name="twitter:description" content="Semantic-physical text-to-motion alignment with synchronized qualitative comparisons.">
   <meta name="twitter:image" content="static/images/figures/framework.png">
-  <meta name="keywords" content="text-to-motion generation, reward guidance, physical simulation, motion diffusion">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="text-to-motion generation, physical simulation, reward guidance, motion diffusion">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>ReAlign-Phy: Semantic and Physical Alignment for Text-to-Motion Generation</title>
+  <link rel="icon" type="image/x-icon" href="">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="static/css/index.css">
+
   <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
 </head>
+
 <body>
-  <section class="hero publication-header">
+  <section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
@@ -28,20 +45,34 @@
             <h1 class="title is-1 publication-title">
               ReAlign-Phy: Semantic and Physical Alignment for Text-to-Motion Generation
             </h1>
-            <p class="publication-subtitle">
-              Step-aware reward guidance with physics-aware motion refinement
-            </p>
-            <div class="publication-links">
-              <a href="static/pdfs/ReAlign-Phy.pdf" target="_blank"
-                 class="external-link button is-normal is-rounded is-dark">
-                <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span>Paper</span>
-              </a>
-              <a href="#qualitative-results"
-                 class="external-link button is-normal is-rounded is-dark">
-                <span class="icon"><i class="fas fa-film"></i></span>
-                <span>Qualitative Results</span>
-              </a>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Supplementary Project Page</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="static/pdfs/ReAlign-Phy.pdf" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#visualizations"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-film"></i></span>
+                    <span>Videos</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#framework"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-project-diagram"></i></span>
+                    <span>Framework</span>
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -49,79 +80,110 @@
     </div>
   </section>
 
-  <main>
-    <section class="section figure-section">
-      <div class="container is-widescreen">
-        <article class="figure-card">
-          <div class="section-heading">
-            <span class="section-index">01</span>
-            <div>
-              <h2 class="title is-3">Overall Framework</h2>
-              <p class="section-kicker">ReAlign-Phy architecture</p>
-            </div>
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="box has-background-white-ter mb-5 p-5">
+            <p class="has-text-justified">
+              <strong>TL;DR:</strong> ReAlign-Phy extends reward-guided text-to-motion generation with
+              physical simulation feedback. It preserves semantic alignment while improving replayability
+              and reducing physically fragile artifacts during simulator rollout.
+            </p>
           </div>
-          <a class="figure-link" href="static/pdfs/figures/framework.pdf" target="_blank">
-            <img src="static/images/figures/framework.png" alt="Overall ReAlign-Phy framework">
-          </a>
-        </article>
-      </div>
-    </section>
-
-    <section class="section figure-section is-soft">
-      <div class="container is-widescreen">
-        <article class="figure-card">
-          <div class="section-heading">
-            <span class="section-index">02</span>
-            <div>
-              <h2 class="title is-3">Visualization 1</h2>
-              <p class="section-kicker">Qualitative comparison</p>
-            </div>
+          <div class="box has-background-white-ter p-5">
+            <p class="has-text-justified">
+              The page follows the original ReAlign project-page structure and updates the qualitative
+              evidence for the semantic-physical setting. We first show the overall framework, then two
+              summary visualizations, and finally synchronized side-by-side comparisons. For each example,
+              the methods are ordered as <strong>MDM</strong>, <strong>DIP</strong>, <strong>MLD</strong>,
+              and <strong>MLD+ReAlign-Phy</strong>. Skinning videos and physics simulation videos are grouped
+              separately, and each group is synchronized for fair visual comparison.
+            </p>
           </div>
-          <a class="figure-link" href="static/pdfs/figures/visualization-1.pdf" target="_blank">
-            <img src="static/images/figures/visualization-1.png" alt="ReAlign-Phy visualization 1">
-          </a>
-        </article>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section figure-section">
-      <div class="container is-widescreen">
-        <article class="figure-card">
-          <div class="section-heading">
-            <span class="section-index">03</span>
-            <div>
-              <h2 class="title is-3">Visualization 2</h2>
-              <p class="section-kicker">Qualitative comparison</p>
+  <section id="framework" class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div id="results-container">
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Overall Framework</h2>
             </div>
+            <div class="image-row">
+              <a href="static/pdfs/figures/framework.pdf" target="_blank">
+                <img src="static/images/figures/framework.png" alt="Overall ReAlign-Phy framework">
+              </a>
+            </div>
+            <h2 class="subtitle has-text-centered justify-text">
+              ReAlign-Phy combines step-aware semantic reward guidance with a simulator-distilled physical
+              proxy model. The framework keeps the diffusion backbone fixed while performing inference-time
+              semantic-physical denoising.
+            </h2>
           </div>
-          <a class="figure-link" href="static/pdfs/figures/visualization-2.pdf" target="_blank">
-            <img src="static/images/figures/visualization-2.png" alt="ReAlign-Phy visualization 2">
-          </a>
-        </article>
-      </div>
-    </section>
 
-    <section id="qualitative-results" class="section results-section">
-      <div class="container is-widescreen">
-        <header class="results-header">
-          <p class="eyebrow">Qualitative Results</p>
-          <h2 class="title is-2">Skinning and Physics Simulation</h2>
-          <p class="results-intro">
-            Each example follows the same method order:
-            <strong>MDM</strong>, <strong>DIP</strong>, <strong>MLD</strong>, and
-            <strong>MLD+ReAlign-Phy</strong>. The first row shows skinning results;
-            the second row shows physics simulation rollouts.
-          </p>
-        </header>
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Visualization 1</h2>
+            </div>
+            <div class="image-row">
+              <a href="static/pdfs/figures/visualization-1.pdf" target="_blank">
+                <img src="static/images/figures/visualization-1.png" alt="Qualitative visualization 1">
+              </a>
+            </div>
+            <h2 class="subtitle has-text-centered justify-text">
+              The qualitative comparison highlights how ReAlign-Phy improves physically executable behavior
+              while retaining the text-conditioned motion intent.
+            </h2>
+          </div>
+
+          <div class="item">
+            <div class="caption top-caption">
+              <h2 class="subtitle has-text-centered">Visualization 2</h2>
+            </div>
+            <div class="image-row">
+              <a href="static/pdfs/figures/visualization-2.pdf" target="_blank">
+                <img src="static/images/figures/visualization-2.png" alt="Qualitative visualization 2">
+              </a>
+            </div>
+            <h2 class="subtitle has-text-centered justify-text">
+              Additional examples compare motion trajectories and simulator rollouts across baseline and
+              physics-aware variants.
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visualizations" class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title has-text-centered justify-top">Synchronized Qualitative Results</h1>
+        <p class="has-text-centered video-note">
+          Videos are muted, preloaded, autoplayed, and looped. Within each row, the four methods are
+          synchronized: play, pause, seek, and replay actions are propagated to the whole comparison group.
+        </p>
         <div id="sample-list"></div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
   <footer class="footer">
-    <div class="container is-max-desktop">
-      <div class="content has-text-centered">
-        <p>ReAlign-Phy supplementary project page.</p>
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page follows the Academic Project Page style used by the original ReAlign supplementary
+              page and adapts it for synchronized ReAlign-Phy qualitative comparisons.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
@@ -144,46 +206,64 @@
       { id: "M006241", prompt: "a person dances around in a little jig" }
     ];
 
-    function createVideo(sampleId, method, type) {
+    function createVideo(sampleId, method, type, groupId) {
       const video = document.createElement("video");
       const base = `static/visualizations/${sampleId}/${method.key}`;
+      const isSkinning = type === "skinning";
+      video.autoplay = true;
       video.controls = true;
       video.loop = true;
       video.muted = true;
+      video.defaultMuted = true;
       video.playsInline = true;
-      video.preload = "none";
-      video.poster = `${base}/poster.png`;
-      video.setAttribute("aria-label", `${sampleId} ${method.label} ${type}`);
+      video.preload = "auto";
+      video.poster = `${base}/${isSkinning ? "poster" : "physics-poster"}.png`;
+      video.dataset.syncGroup = groupId;
+      video.dataset.method = method.label;
+      video.setAttribute("aria-label", `${sampleId} ${method.label} ${isSkinning ? "skinning" : "physics simulation"}`);
 
       const source = document.createElement("source");
-      source.src = `${base}/${type === "Skinning" ? "skinning" : "physics"}.mp4`;
+      source.src = `${base}/${isSkinning ? "skinning" : "physics"}.mp4`;
       source.type = "video/mp4";
       video.appendChild(source);
       return video;
     }
 
-    function createMediaRow(sample, type) {
+    function createComparisonRow(sample, type, title) {
+      const groupId = `${sample.id}-${type}`;
       const section = document.createElement("section");
-      section.className = "media-comparison";
+      section.className = "comparison-row";
+      section.dataset.syncGroup = groupId;
 
-      const title = document.createElement("h4");
-      title.className = "media-row-title";
-      title.textContent = type;
-      section.appendChild(title);
+      const header = document.createElement("div");
+      header.className = "comparison-header";
+
+      const heading = document.createElement("h3");
+      heading.className = "subtitle is-4 comparison-title";
+      heading.textContent = title;
+
+      const controls = document.createElement("div");
+      controls.className = "comparison-controls";
+      controls.innerHTML = `
+        <button class="button is-small is-dark sync-play" type="button">Play group</button>
+        <button class="button is-small sync-replay" type="button">Replay group</button>
+      `;
+
+      header.appendChild(heading);
+      header.appendChild(controls);
+      section.appendChild(header);
 
       const grid = document.createElement("div");
-      grid.className = "method-grid";
+      grid.className = "video-list sync-video-list";
 
       methods.forEach((method) => {
-        const card = document.createElement("article");
-        card.className = `method-card method-${method.key}`;
-
-        const heading = document.createElement("h5");
-        heading.className = "method-name";
-        heading.textContent = method.label;
-
-        card.appendChild(heading);
-        card.appendChild(createVideo(sample.id, method, type));
+        const card = document.createElement("div");
+        card.className = `item video-card method-${method.key}`;
+        const label = document.createElement("div");
+        label.className = "video-method-label";
+        label.textContent = method.label;
+        card.appendChild(label);
+        card.appendChild(createVideo(sample.id, method, type, groupId));
         grid.appendChild(card);
       });
 
@@ -191,34 +271,137 @@
       return section;
     }
 
-    const sampleList = document.getElementById("sample-list");
-    samples.forEach((sample, index) => {
-      const article = document.createElement("article");
-      article.className = "sample-block";
+    function buildSamples() {
+      const sampleList = document.getElementById("sample-list");
+      samples.forEach((sample, index) => {
+        const article = document.createElement("article");
+        article.className = "item sample-item";
 
-      const header = document.createElement("header");
-      header.className = "sample-header";
+        const header = document.createElement("div");
+        header.className = "caption top-caption sample-caption";
+        header.innerHTML = `
+          <h2 class="subtitle has-text-centered">Sample ${String(index + 1).padStart(2, "0")} (${sample.id})</h2>
+          <p class="sample-prompt">"${sample.prompt}"</p>
+        `;
 
-      const number = document.createElement("span");
-      number.className = "sample-number";
-      number.textContent = String(index + 1).padStart(2, "0");
+        article.appendChild(header);
+        article.appendChild(createComparisonRow(sample, "skinning", "Skinning"));
+        article.appendChild(createComparisonRow(sample, "physics", "Physics Simulation"));
+        sampleList.appendChild(article);
+      });
+    }
 
-      const copy = document.createElement("div");
-      const id = document.createElement("p");
-      id.className = "sample-id";
-      id.textContent = `Sample ${sample.id}`;
-      const prompt = document.createElement("h3");
-      prompt.className = "sample-prompt";
-      prompt.textContent = sample.prompt;
+    function syncGroup(groupId) {
+      const videos = Array.from(document.querySelectorAll(`video[data-sync-group="${groupId}"]`));
+      if (!videos.length) {
+        return;
+      }
 
-      copy.appendChild(id);
-      copy.appendChild(prompt);
-      header.appendChild(number);
-      header.appendChild(copy);
-      article.appendChild(header);
-      article.appendChild(createMediaRow(sample, "Skinning"));
-      article.appendChild(createMediaRow(sample, "Physics Simulation"));
-      sampleList.appendChild(article);
+      let syncing = false;
+      const tolerance = 0.12;
+
+      function setTimes(time) {
+        videos.forEach((video) => {
+          if (Number.isFinite(video.duration) && video.duration > 0) {
+            const target = Math.min(time, Math.max(video.duration - 0.05, 0));
+            if (Math.abs(video.currentTime - target) > tolerance) {
+              video.currentTime = target;
+            }
+          }
+        });
+      }
+
+      function playAll(master) {
+        if (syncing) return;
+        syncing = true;
+        setTimes(master.currentTime || 0);
+        videos.forEach((video) => {
+          video.muted = true;
+          const promise = video.play();
+          if (promise && promise.catch) {
+            promise.catch(() => {});
+          }
+        });
+        syncing = false;
+      }
+
+      function pauseAll() {
+        if (syncing) return;
+        syncing = true;
+        videos.forEach((video) => video.pause());
+        syncing = false;
+      }
+
+      function replayAll() {
+        syncing = true;
+        videos.forEach((video) => {
+          video.currentTime = 0;
+          video.muted = true;
+          const promise = video.play();
+          if (promise && promise.catch) {
+            promise.catch(() => {});
+          }
+        });
+        syncing = false;
+      }
+
+      videos.forEach((video) => {
+        video.addEventListener("play", () => playAll(video));
+        video.addEventListener("pause", () => {
+          if (!video.ended) pauseAll();
+        });
+        video.addEventListener("seeking", () => {
+          if (!syncing) setTimes(video.currentTime);
+        });
+        video.addEventListener("timeupdate", () => {
+          if (syncing || video.paused) return;
+          videos.forEach((peer) => {
+            if (peer === video || peer.paused) return;
+            if (Math.abs(peer.currentTime - video.currentTime) > 0.35) {
+              peer.currentTime = Math.min(video.currentTime, Math.max(peer.duration - 0.05, 0));
+            }
+          });
+        });
+        video.addEventListener("ended", replayAll);
+      });
+
+      const row = document.querySelector(`.comparison-row[data-sync-group="${groupId}"]`);
+      row.querySelector(".sync-play").addEventListener("click", () => playAll(videos[0]));
+      row.querySelector(".sync-replay").addEventListener("click", replayAll);
+
+      const ready = videos.map((video) => new Promise((resolve) => {
+        if (video.readyState >= 1) {
+          resolve();
+        } else {
+          video.addEventListener("loadedmetadata", resolve, { once: true });
+        }
+      }));
+
+      Promise.all(ready).then(() => {
+        replayAll();
+      });
+    }
+
+    window.addEventListener("load", () => {
+      buildSamples();
+      samples.forEach((sample) => {
+        syncGroup(`${sample.id}-skinning`);
+        syncGroup(`${sample.id}-physics`);
+      });
+
+      if (window.bulmaCarousel) {
+        bulmaCarousel.attach(".carousel", {
+          slidesToScroll: 1,
+          slidesToShow: 1,
+          loop: true,
+          infinite: true,
+          autoplay: true,
+          autoplaySpeed: 5000
+        });
+      }
+      if (window.bulmaSlider) {
+        bulmaSlider.attach();
+      }
     });
   </script>
 </body>
